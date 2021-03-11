@@ -13,10 +13,10 @@ class HashTableTest {
         Assertions.assertEquals(50, hashTable.count());
         Assertions.assertEquals(16, hashTable.size());
 
-        for (int i = 0; i < 500; i++){
-            hashTable.put(String.valueOf(i), String.valueOf(i));
+        for (int i = 0; i < 50; i++){
+            hashTable.drop(String.valueOf(i));
         }
-        Assertions.assertEquals(500, hashTable.count());
+        Assertions.assertEquals(0, hashTable.count());
         Assertions.assertEquals(16, hashTable.size());
     }
 

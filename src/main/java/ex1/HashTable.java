@@ -102,6 +102,7 @@ public class HashTable {
         int hash = getHash(key);
         if (entries[hash] != null) {
 
+
             HashEntry temp = entries[hash];
 
             /*Como en el método anterior, si se trataba de borrar un HashEntry que no existe, el programa lanzaba una

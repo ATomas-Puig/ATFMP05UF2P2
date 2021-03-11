@@ -22,6 +22,7 @@ public class HashTable {
         return this.SIZE;
     }
 
+
     /**
      * Permet afegir un nou element a la taula.
      *

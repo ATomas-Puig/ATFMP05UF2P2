@@ -124,6 +124,8 @@ class HashTableTest {
                         "\n bucket[14] = [20, 21]", hashTable.toString());
 
         Assertions.assertEquals("3", hashTable.get("0"));
+        hashTable.drop("0");
+        Assertions.assertNull(hashTable.get("0"));
         Assertions.assertEquals("22", hashTable.get("22"));
         Assertions.assertEquals("21", hashTable.get("20"));
         Assertions.assertEquals("68", hashTable.get("11"));

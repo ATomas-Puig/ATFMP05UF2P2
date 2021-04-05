@@ -10,7 +10,7 @@ class HashTableTest {
         Assertions.assertEquals(0, hashTable.count());
         Assertions.assertEquals(16, hashTable.size());
 
-        for (int i = 0; i < 50; i++){
+        for (int i = 0; i < 50; i++) {
             hashTable.put(String.valueOf(i), String.valueOf(i));
         }
         Assertions.assertEquals(50, hashTable.count());
@@ -37,7 +37,7 @@ class HashTableTest {
         //Assertions.assertEquals(16, hashTable.size());
         Assertions.assertEquals(128, hashTable.size());
 
-        for (int i = 0; i < 50; i++){
+        for (int i = 0; i < 50; i++) {
             hashTable.drop(String.valueOf(i));
         }
         Assertions.assertEquals(0, hashTable.count());
@@ -51,7 +51,7 @@ class HashTableTest {
         Assertions.assertEquals(0, hashTable.count());
         Assertions.assertEquals(16, hashTable.size());
 
-        for (int i= 0; i < 20; i++){
+        for (int i = 0; i < 20; i++) {
             hashTable.put(String.valueOf(i), String.valueOf(i));
         }
         Assertions.assertEquals(20, hashTable.count());
@@ -63,14 +63,14 @@ class HashTableTest {
         //Assertions.assertEquals(16, hashTable.size());
         Assertions.assertEquals(32, hashTable.size());
 
-        for (int i = 0; i < 100; i++){
+        for (int i = 0; i < 100; i++) {
             hashTable.put(String.valueOf(i), String.valueOf(i));
         }
         Assertions.assertEquals(100, hashTable.count());
         //Assertions.assertEquals(16, hashTable.size());
         Assertions.assertEquals(512, hashTable.size());
 
-        for (int i = 0; i < 50; i++){
+        for (int i = 0; i < 50; i++) {
             hashTable.drop(String.valueOf(i));
         }
         Assertions.assertEquals(50, hashTable.count());
@@ -78,7 +78,7 @@ class HashTableTest {
         Assertions.assertEquals(512, hashTable.size());
 
 
-        for (int i = 50; i < 100; i++){
+        for (int i = 50; i < 100; i++) {
             hashTable.drop(String.valueOf(i));
         }
         Assertions.assertEquals(0, hashTable.count());
@@ -97,6 +97,7 @@ class HashTableTest {
         hashTable.put("0", "2");
         hashTable.put("11", "21");
         hashTable.put("11", "68");
+        hashTable.put("22", "22");
         hashTable.put("0", "3");
         hashTable.put("20", "20");
         hashTable.put("6", "6");
@@ -104,32 +105,72 @@ class HashTableTest {
         hashTable.put("354", "354");
         hashTable.put("24", "24");
         /*Assertions.assertEquals(
-                "\n bucket[0] = [0, 3] -> [11, 68]" +
+                "\n bucket[0] = [0, 3] -> [11, 68] -> [22, 22]" +
                         "\n bucket[2] = [354, 354] -> [24, 24]" +
                         "\n bucket[6] = [6, 6]" +
                         "\n bucket[14] = [20, 21]", hashTable.toString());*/
         Assertions.assertEquals(
-                "\n bucket[0] = [11, 68]" +
+                "\n bucket[0] = [22, 22]" +
                         "\n bucket[2] = [24, 24]" +
-                        "\n bucket[16] = [0, 3]" +
                         "\n bucket[18] = [354, 354]" +
-                        "\n bucket[22] = [6, 6]" +
-                        "\n bucket[30] = [20, 21]", hashTable.toString());
-        Assertions.assertEquals(6, hashTable.count());
+                        "\n bucket[32] = [11, 68]" +
+                        "\n bucket[48] = [0, 3]" +
+                        "\n bucket[54] = [6, 6]" +
+                        "\n bucket[62] = [20, 21]", hashTable.toString());
+        Assertions.assertEquals(7, hashTable.count());
         //Assertions.assertEquals(16, hashTable.size());
-        Assertions.assertEquals(32, hashTable.size());
+        Assertions.assertEquals(64, hashTable.size());
     }
 
     @org.junit.jupiter.api.Test
     void get() {
         HashTable hashTable = new HashTable();
-        for (int i = 0; i < 50; i++){
+        Assertions.assertNull(hashTable.get("1"));
+
+        hashTable.put("0", "1");
+        hashTable.put("0", "2");
+        hashTable.put("11", "21");
+        hashTable.put("11", "68");
+        hashTable.put("22", "22");
+        hashTable.put("0", "3");
+        hashTable.put("20", "20");
+        hashTable.put("6", "6");
+        hashTable.put("20", "21");
+        hashTable.put("354", "354");
+        hashTable.put("24", "24");
+        /*Assertions.assertEquals(
+                "\n bucket[0] = [0, 3] -> [11, 68] -> [22, 22]" +
+                        "\n bucket[2] = [354, 354] -> [24, 24]" +
+                        "\n bucket[6] = [6, 6]" +
+                        "\n bucket[14] = [20, 21]", hashTable.toString());*/
+        Assertions.assertEquals(
+                "\n bucket[0] = [22, 22]" +
+                        "\n bucket[2] = [24, 24]" +
+                        "\n bucket[18] = [354, 354]" +
+                        "\n bucket[32] = [11, 68]" +
+                        "\n bucket[48] = [0, 3]" +
+                        "\n bucket[54] = [6, 6]" +
+                        "\n bucket[62] = [20, 21]", hashTable.toString());
+
+        Assertions.assertEquals("3", hashTable.get("0"));
+        hashTable.drop("0");
+        Assertions.assertNull(hashTable.get("0"));
+        Assertions.assertEquals("22", hashTable.get("22"));
+        Assertions.assertEquals("21", hashTable.get("20"));
+        Assertions.assertEquals("68", hashTable.get("11"));
+        Assertions.assertNull(hashTable.get("7"));
+        Assertions.assertEquals("6", hashTable.get("6"));
+        Assertions.assertEquals("24", hashTable.get("24"));
+        Assertions.assertEquals("354", hashTable.get("354"));
+
+
+        /*for (int i = 0; i < 50; i++){
             hashTable.put(String.valueOf(i), String.valueOf(i));
         }
         Assertions.assertNull(hashTable.get("510"));
         Assertions.assertEquals("43", hashTable.get("43"));
         Assertions.assertEquals("0", hashTable.get("0"));
-        Assertions.assertNull(hashTable.get("-1"));
+        Assertions.assertNull(hashTable.get("-1"));*/
     }
 
     @org.junit.jupiter.api.Test
@@ -192,7 +233,7 @@ class HashTableTest {
                         "\n bucket[33] = [12, 12]", hashTable.toString());
         hashTable.drop("0");
         //Assertions.assertEquals( "\n bucket[1] = [12, 12] -> [23, 23]", hashTable.toString());
-        Assertions.assertEquals("\n bucket[1] = [23, 23]\n bucket[33] = [12, 12]",hashTable.toString());
+        Assertions.assertEquals("\n bucket[1] = [23, 23]\n bucket[33] = [12, 12]", hashTable.toString());
         Assertions.assertEquals(2, hashTable.count());
         //Assertions.assertEquals(16, hashTable.size());
         Assertions.assertEquals(64, hashTable.size());
